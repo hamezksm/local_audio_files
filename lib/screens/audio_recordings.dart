@@ -2,10 +2,17 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:local_audio_files/database/database.dart';
 
-class AudioListScreen extends StatelessWidget {
+class AudioListScreen extends StatefulWidget {
+  const AudioListScreen({super.key});
+
+  @override
+  State<AudioListScreen> createState() => _AudioListScreenState();
+}
+
+class _AudioListScreenState extends State<AudioListScreen> {
   final DatabaseHelper _databaseHelper = DatabaseHelper();
 
-  AudioListScreen({super.key});
+  bool isPlaying = false;
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +34,9 @@ class AudioListScreen extends StatelessWidget {
               itemBuilder: (context, index) {
                 return ListTile(
                   title: Text(audioList[index]['date']),
-                  onTap: () => _playAudio(audioList[index]['path']),
+                  onTap: () => isPlaying
+                      ? _pauseAudio
+                      : _playAudio(audioList[index]['path']),
                 );
               },
             );
@@ -41,5 +50,12 @@ class AudioListScreen extends StatelessWidget {
     AudioPlayer audioPlayer = AudioPlayer();
     Source urlSource = UrlSource(path);
     await audioPlayer.play(urlSource);
+    isPlaying = true;
+  }
+
+  Future<void> _pauseAudio() async {
+    AudioPlayer audioPlayer = AudioPlayer();
+    await audioPlayer.pause();
+    isPlaying = false;
   }
 }

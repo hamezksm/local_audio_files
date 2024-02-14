@@ -18,6 +18,7 @@ class _AudioRecordingScreenState extends State<AudioRecordingScreen> {
   final AudioPlayer _audioPlayer = AudioPlayer();
   final DatabaseHelper _databaseHelper = DatabaseHelper();
   bool _isRecording = false;
+  bool isPlaying = false;
   AudioRecorder audioRecorder = AudioRecorder();
 
   @override
@@ -43,7 +44,7 @@ class _AudioRecordingScreenState extends State<AudioRecordingScreen> {
                   )
                 : const SizedBox(),
             ElevatedButton(
-              onPressed: () => _playRecording(),
+              onPressed: () => isPlaying ? _pauseRecording() : _playRecording(),
               child: const Text('Play Recording'),
             ),
           ],
@@ -107,7 +108,15 @@ class _AudioRecordingScreenState extends State<AudioRecordingScreen> {
     if (_audioPath != null) {
       Source urlSource = UrlSource(_audioPath!);
       await _audioPlayer.play(urlSource);
+      isPlaying = true;
     }
+  }
+
+  Future<void> _pauseRecording() async {
+    await _audioPlayer.pause();
+    setState(() {
+      isPlaying = false;
+    });
   }
 
   @override

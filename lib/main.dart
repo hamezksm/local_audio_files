@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:local_audio_files/screens/audio_recordings.dart';
 import 'package:local_audio_files/screens/audio_screen.dart';
 
 void main() {
@@ -11,9 +12,18 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Flutter Audio saver',
-      home: AudioRecordingScreen(),
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      initialRoute: '/',
+      routes: {
+        '/': (context) => const AudioRecordingScreen(),
+        '/audioList': (context) => AudioListScreen(),
+      },
+      // home: const AudioRecordingScreen(),
     );
   }
 }
