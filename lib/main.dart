@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:local_audio_files/screens/audio_recordings.dart';
 import 'package:local_audio_files/screens/audio_screen.dart';
 
-void main() {
+Future main() async {
+  await dotenv.load(fileName: '.env');
   runApp(const MyApp());
 }
 
@@ -21,7 +23,7 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) => const AudioRecordingScreen(),
-        '/audioList': (context) => AudioListScreen(),
+        '/audioList': (context) => const AudioListScreen(),
       },
       // home: const AudioRecordingScreen(),
     );

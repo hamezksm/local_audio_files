@@ -60,6 +60,7 @@ class _AudioRecordingScreenState extends State<AudioRecordingScreen> {
     );
   }
 
+
   Future<void> _startRecording() async {
     if (await Permission.microphone.request().isGranted) {
       Directory appDocDir = await getApplicationDocumentsDirectory();
